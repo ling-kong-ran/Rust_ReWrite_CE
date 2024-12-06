@@ -3,7 +3,7 @@
 version = 3
 
 [[package]]
-name = "Ruest_ReWrite_CE"
+name = "re_write_ce"
 version = "0.1.0"
 dependencies = [
  "winapi",
