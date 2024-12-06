@@ -15,7 +15,14 @@ pub struct Process {
 impl Process {
     pub fn open(pid:u32) -> io::Result<Self> {
         // 句柄
-        let ptr = unsafe { winapi::um::processthreadsapi::OpenProcess(winnt::PROCESS_QUERY_INFORMATION | winnt::PROCESS_VM_READ, FALSE, pid) };
+        let ptr = unsafe { winapi::um::processthreadsapi::OpenProcess(
+            winnt::PROCESS_QUERY_INFORMATION
+                | winnt::PROCESS_VM_READ
+                | winnt::PROCESS_VM_WRITE
+                | winnt::PROCESS_VM_OPERATION,
+            FALSE,
+            pid)
+        };
         NonNull::new(ptr)
             .map(|handle| Self { pid, handle })
             .ok_or_else(io::Error::last_os_error)
